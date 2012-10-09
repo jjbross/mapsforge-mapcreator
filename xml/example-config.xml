@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mapcreator-config xmlns="http://mapsforge.org/mapcreator" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://mapsforge.org/mapcreator mapcreator.xsd " default-map-start-zoom="14" map-staging-path="maps"
+	pbf-staging-path="data" polygons-path="polygons" map-target-path="/web/ftp.mapsforge.org/public/maps" logging-path="logs" initial-source-pbf="planet.osm.pbf"
+        osmosis-path="/export/local-1/public/mapsforge/preprocessing/bin/osmosis-0.40.1/bin/osmosis">
+<!--
+	<part name="europe" create-pbf="true" create-map="false">
+		<part name="germany" create-pbf="true" create-map="true" type="hd" map-start-lat="52.525582" map-start-lon="13.370061">
+			<part name="berlin" map-start-lat="52.525582" map-start-lon="13.370061" />
+		</part>
+	</part>
+-->
+
+	<!-- NORTH AMERICA -->
+	<part name="north-america" create-map="false">
+	    
+	    <!-- UNITED STATES -->
+		<part name="us" create-map="false">
+			<part name="us-west" create-pbf="true" create-map="false" defines-hierarchy="false">
+				<part name="arizona" map-start-lat="33.44838" map-start-lon="-112.07404" />
+				<part name="california" map-start-lat="38.58157" map-start-lon="-121.4944" />
+				<part name="colorado" map-start-lat="39.7392" map-start-lon="-104.9847" />
+				<part name="idaho" map-start-lat="43.61505" map-start-lon="-116.20444" />
+				<part name="montana" map-start-lat="46.5927" map-start-lon="-112.0361" />
+				<part name="nevada" map-start-lat="36.114026" map-start-lon="-115.165901" />
+				<part name="new-mexico" map-start-lat="35.687" map-start-lon="-105.9378" />
+				<part name="oregon" map-start-lat="44.9466" map-start-lon="-123.0065" />
+				<part name="utah" map-start-lat="40.76065" map-start-lon="-111.89109" />
+				<part name="washington" map-start-lat="47.5993" map-start-lon="-122.32888" />
+				<part name="wyoming" map-start-lat="41.14" map-start-lon="-104.8202" />
+			</part>
+
+			<part name="us-midwest" create-pbf="true" create-map="false" defines-hierarchy="false">
+				<part name="illinois" map-start-lat="39.79898" map-start-lon="-89.64437" />
+				<part name="indiana" map-start-lat="39.76838" map-start-lon="-86.15805" />
+				<part name="iowa" map-start-lat="41.59106" map-start-lon="-93.60372" />
+				<part name="kansas" map-start-lat="39.04901" map-start-lon="-95.67756" />
+				<part name="michigan" map-start-lat="42.73377" map-start-lon="-84.55538" />
+				<part name="minnesota" map-start-lat="44.9506" map-start-lon="-93.103" />
+				<part name="missouri" map-start-lat="38.5767" map-start-lon="-92.17352" />
+				<part name="nebraska" map-start-lat="40.8001" map-start-lon="-96.6674" />
+				<part name="north-dakota" map-start-lat="46.80833" map-start-lon="-100.78374" />
+				<part name="ohio" map-start-lat="39.96226" map-start-lon="-83.00071" />
+				<part name="south-dakota" map-start-lat="44.36832" map-start-lon="-100.35096" />
+				<part name="wisconsin" map-start-lat="43.07476" map-start-lon="-89.38376" />
+			</part>
+
+			<part name="us-south" create-pbf="true" create-map="false" defines-hierarchy="false">
+				<part name="alabama" map-start-lat="32.366" map-start-lon="-86.2724" />
+				<part name="arkansas" map-start-lat="34.74648" map-start-lon="-92.28959" />
+				<part name="delaware" map-start-lat="39.1417" map-start-lon="-75.474" />
+				<part name="district-of-columbia" map-start-lat="38.8932" map-start-lon="-77.0328" />
+				<part name="florida" map-start-lat="30.43808" map-start-lon="-84.28093" />
+				<part name="georgia" map-start-lat="33.7491" map-start-lon="-84.39019" />
+				<part name="kentucky" map-start-lat="38.20091" map-start-lon="-84.87329" />
+				<part name="louisiana" map-start-lat="30.45075" map-start-lon="-91.15455" />
+				<part name="maryland" map-start-lat="38.9727" map-start-lon="-76.5047" />
+				<part name="mississippi" map-start-lat="32.29904" map-start-lon="-90.18477" />
+				<part name="north-carolina" map-start-lat="35.7721" map-start-lon="-78.63861" />
+				<part name="oklahoma" map-start-lat="35.48968" map-start-lon="-97.53209" />
+				<part name="south-carolina" map-start-lat="34.00882" map-start-lon="-81.03727" />
+				<part name="tennessee" map-start-lat="36.19493" map-start-lon="-86.74177" />
+				<part name="texas" map-start-lat="29.75894" map-start-lon="-95.36769" />
+				<part name="virginia" map-start-lat="37.5427" map-start-lon="-77.4425" />
+				<part name="west-virginia" map-start-lat="38.34982" map-start-lon="-81.63263" />
+			</part>
+
+			<part name="us-northeast" create-pbf="true" create-map="false" defines-hierarchy="false">
+				<part name="connecticut" map-start-lat="41.76415" map-start-lon="-72.68225" />
+				<part name="maine" map-start-lat="44.2933" map-start-lon="-69.7297" />
+				<part name="massachusetts" map-start-lat="42.36048" map-start-lon="-71.05957" />
+				<part name="new-hampshire" map-start-lat="43.2079" map-start-lon="-71.5493" />
+				<part name="new-jersey" map-start-lat="40.2116" map-start-lon="-74.7507" />
+				<part name="new-york" map-start-lat="40.7222" map-start-lon="-73.9791" />
+				<part name="pennsylvania" map-start-lat="40.2822" map-start-lon="-76.8804" />
+				<part name="rhode-island" map-start-lat="41.82399" map-start-lon="-71.41284" />
+				<part name="vermont" map-start-lat="44.2629" map-start-lon="-72.5803" />
+			</part>
+
+			<part name="us-pacific" create-pbf="true" create-map="true" map-start-lat="21.3068" map-start-lon="-157.855"
+				defines-hierarchy="false">
+				<part name="hawaii" map-start-lat="21.3068" map-start-lon="-157.855" />
+			</part>
+			<part name="alaska" map-start-lat="58.302" map-start-lon="-134.4197" />
+		</part>
+	</part>
+</mapcreator-config>
