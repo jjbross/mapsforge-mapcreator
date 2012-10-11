@@ -3,13 +3,78 @@
 	xsi:schemaLocation="http://mapsforge.org/mapcreator mapcreator.xsd " default-map-start-zoom="14" map-staging-path="maps"
 	pbf-staging-path="data" polygons-path="polygons" map-target-path="/web/ftp.mapsforge.org/public/maps" logging-path="logs" initial-source-pbf="planet.osm.pbf"
         osmosis-path="/export/local-1/public/mapsforge/preprocessing/bin/osmosis-0.40.1/bin/osmosis">
-<!--
+	<!-- EUROPE -->
 	<part name="europe" create-pbf="true" create-map="false">
-		<part name="germany" create-pbf="true" create-map="true" type="hd" map-start-lat="52.525582" map-start-lon="13.370061">
+		<part name="germany" create-pbf="true" type="hd" map-start-lat="52.525582" map-start-lon="13.370061">			
+			<part name="baden-wuerttemberg" map-start-lat="48.784092" map-start-lon="9.181652"/>
+			<part name="bayern" map-start-lat="48.140203" map-start-lon="11.558347"/>
 			<part name="berlin" map-start-lat="52.525582" map-start-lon="13.370061" />
+			<part name="brandenburg" map-start-lat="52.391486" map-start-lon="13.06622"/>
+			<part name="bremen" map-start-lat="53.083444" map-start-lon="8.813782"/>
+			<part name="hamburg" map-start-lat="53.553223" map-start-lon="10.007021"/>
+			<part name="hessen" map-start-lat="50.070748" map-start-lon="8.243759"/>
+			<part name="mecklenburg-vorpommern" map-start-lat="53.634397" map-start-lon="11.407306"/>
+			<part name="niedersachsen" map-start-lat="52.377014" map-start-lon="9.741676"/>
+			<part name="nordrhein-westfalen" map-start-lat="51.219707" map-start-lon="6.794465"/>
+			<part name="rheinland-pfalz" map-start-lat="50.001105" map-start-lon="8.258736"/>
+			<part name="saarland" map-start-lat="49.241166" map-start-lon="6.990352"/>
+			<part name="sachsen-anhalt" map-start-lat="52.130669" map-start-lon="11.628792"/>
+			<part name="sachsen" map-start-lat="51.040557" map-start-lon="13.731966"/>
+			<part name="schleswig-holstein" map-start-lat="54.314971" map-start-lon="10.13190"/>
+			<part name="thueringen" map-start-lat="50.972535" map-start-lon="11.038556"/>			
 		</part>
+			
+		<part name="albania" map-start-lat="41.32737" map-start-lon="19.81864"/>
+		<part name="andorra" map-start-lat="42.509146" map-start-lon="1.530608"/>
+		<part name="austria" map-start-lat="48.208609" map-start-lon="16.373148"/>
+		<part name="azores" map-start-lat="37.7406" map-start-lon="-25.6728"/>
+		<part name="belarus" map-start-lat="53.90226" map-start-lon="27.56186"/>
+		<part name="belgium" map-start-lat="50.84654" map-start-lon="4.35168"/>
+		<part name="bosnia-herzegovina" map-start-lat="43.85845" map-start-lon="18.42956"/>
+		<part name="bulgaria" map-start-lat="42.697687" map-start-lon="23.321764"/>
+		<part name="croatia" map-start-lat="45.814713" map-start-lon="15.978413"/>
+		<part name="cyprus" map-start-lat="35.1637" map-start-lon="33.3635"/>
+		<part name="czech_republic" map-start-lat="50.087699" map-start-lon="14.419212"/>
+		<part name="denmark" map-start-lat="55.6882" map-start-lon="12.5638"/>
+		<part name="estonia" map-start-lat="59.437177" map-start-lon="24.753227"/>
+		<part name="faroe_islands" map-start-lat="62.012" map-start-lon="-6.768"/>
+		<part name="finland" map-start-lat="60.1666" map-start-lon="24.9435"/>
+		<part name="france" create-pbf="true" map-start-lat="48.8614" map-start-lon="2.3606"/>
+		<part name="great_britain" create-pbf="true" map-start-lat="51.499266" map-start-lon="-0.124787"/>
+		<part name="greece" map-start-lat="37.979166" map-start-lon="23.716682"/>
+		<part name="hungary" map-start-lat="47.498532" map-start-lon="19.040766"/>
+		<part name="iceland" map-start-lat="64.1473" map-start-lon="-21.9399"/>
+		<part name="ireland" map-start-lat="53.34931" map-start-lon="-6.26117"/>
+		<part name="isle_of_man" map-start-lat="54.14979" map-start-lon="-4.47801"/>
+		<part name="italy" map-start-lat="41.890522" map-start-lon="12.494245"/>
+		<part name="kosovo" map-start-lat="42.657965" map-start-lon="21.153831"/>
+		<part name="latvia" map-start-lat="56.946999" map-start-lon="24.105227"/>
+		<part name="liechtenstein" map-start-lat="47.13871" map-start-lon="9.52093"/>
+		<part name="lithuania" map-start-lat="54.690106" map-start-lon="25.279799"/>
+		<part name="luxembourg" map-start-lat="49.612093" map-start-lon="6.131541"/>
+		<part name="macedonia" map-start-lat="41.991235" map-start-lon="21.446857"/>
+		<part name="malta" map-start-lat="35.8972" map-start-lon="14.5203"/>
+		<part name="moldova" map-start-lat="47.0321" map-start-lon="28.8362"/>
+		<part name="monaco" map-start-lat="43.7372" map-start-lon="7.4391"/>
+		<part name="montenegro" map-start-lat="42.439516" map-start-lon="19.266071"/>
+		<part name="netherlands" map-start-lat="52.084167" map-start-lon="4.3175"/>
+		<part name="norway" map-start-lat="59.9133" map-start-lon="10.7391"/>
+		<part name="poland" map-start-lat="52.230073" map-start-lon="21.011395"/>
+		<part name="portugal" map-start-lat="41.150223" map-start-lon="-8.61032"/>
+		<part name="romania" map-start-lat="44.437243" map-start-lon="26.097679"/>
+		<part name="russia" map-start-lat="55.75162" map-start-lon="37.61871"/>
+		<part name="serbia" map-start-lat="44.802575" map-start-lon="20.465684"/>
+		<part name="slovakia" map-start-lat="48.14805" map-start-lon="17.108459"/>
+		<part name="slovenia" map-start-lat="46.051493" map-start-lon="14.505944"/>
+		<part name="spain" map-start-lat="40.416608" map-start-lon="-3.700451"/>
+		<part name="sweden" map-start-lat="59.3308" map-start-lon="18.0613"/>
+		<part name="switzerland" map-start-lat="46.948395" map-start-lon="7.445351"/>
+		<part name="turkey" map-start-lat="41.005358" map-start-lon="28.978415"/>
+		<part name="ukraine" map-start-lat="50.4554" map-start-lon="30.532"/>
+		<!-- <part name="" map-start-lat="" map-start-lon=""/> -->
+		
 	</part>
--->
+
 
 	<!-- NORTH AMERICA -->
 	<part name="north-america" create-map="false">

@@ -67,9 +67,10 @@
     	<attribute name="polygons-path" type="string" use="optional"
     		default="polygons">
     	</attribute>
-        <attribute name="logging-path" type="string" use="required"></attribute>
-        <attribute name="initial-source-pbf" type="string"
+    	<attribute name="logging-path" type="string" use="required"></attribute>
+    	<attribute name="initial-source-pbf" type="string"
     		use="optional" default="planet.osm.pbf">
     	</attribute>
+    	<attribute name="osmosis-path" type="string" default="osmosis"></attribute>
     </complexType>
 </schema>

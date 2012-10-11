@@ -13,7 +13,13 @@ except ImportError:
     from xml.etree import ElementTree as ET    
 from optparse import OptionParser
 from subprocess import CalledProcessError
-import logging.handlers
+
+import logging.config
+from logging.handlers import RotatingFileHandler
+from logging.handlers import SMTPHandler
+# hack to support logging config file in python 2.5 with these handlers
+logging.RotatingFileHandler = RotatingFileHandler
+logging.SMTPHandler = SMTPHandler
 import os
 import os.path as PATH
 import subprocess
@@ -120,15 +126,18 @@ class MapCreator:
                 
     
     def call_create_pbf(self, source_pbf, staging_dir, current_part_name):
-       
+        
+        # set the path to the pbf file
         target_pbf = staging_dir + current_part_name + '.osm.pbf'
        
+        # check whether source pbf exists and has non-zero size (irrelevant for dry run)
         source_pbf_path = self.pbf_staging_path + source_pbf
-        if not PATH.exists(source_pbf_path):
-            raise ProcessingException('cannot create %s, source pbf is missing: %s' % (target_pbf,source_pbf_path))
-        if PATH.getsize(source_pbf_path) == 0:
-            raise ProcessingException('cannot create %s, source pbf is empty: %s' % (target_pbf,source_pbf_path))
-
+        if not self.dry_run:
+            if not PATH.exists(source_pbf_path):
+                raise ProcessingException('cannot create %s, source pbf is missing: %s' % (target_pbf,source_pbf_path))
+            if PATH.getsize(source_pbf_path) == 0:
+                raise ProcessingException('cannot create %s, source pbf is empty: %s' % (target_pbf,source_pbf_path))
+    
         polygons_path = self.polygons_path + staging_dir + current_part_name+'.poly'
         if not PATH.exists(polygons_path):
             raise ProcessingException('cannot create pbf %s , polygon is missing: %s' % (target_pbf, polygons_path))
@@ -149,7 +158,7 @@ class MapCreator:
                 subprocess.check_call(['touch',target_pbf_path])
             logfile.close()
             
-            if PATH.getsize(target_pbf_path) == 0:
+            if not self.dry_run and PATH.getsize(target_pbf_path) == 0:
                 raise ProcessingException('error creating %s, resulting pbf is empty' % (target_pbf_path))
             
             return target_pbf
@@ -161,13 +170,16 @@ class MapCreator:
     
     def call_create_map(self, source_pbf, staging_dir, target_dir, current_part_name, area_filter, start_zoom, storage_type='ram', lat=None,lon=None):
         
+        # set the path to the map file
         map_file = staging_dir + current_part_name + ".map"
         
+        # check whether source pbf exists and has non-zero size (irrelevant for dry run)
         source_pbf_path = self.pbf_staging_path + source_pbf
-        if not PATH.exists(source_pbf_path):
-            raise ProcessingException('cannot create map %s, source pbf is missing: %s' % (map_file,source_pbf_path))
-        if PATH.getsize(source_pbf_path) == 0:
-            raise ProcessingException('cannot create map %s, source pbf is empty: %s' % (map_file,source_pbf_path))            
+        if not self.dry_run:
+            if not PATH.exists(source_pbf_path):
+                raise ProcessingException('cannot create map %s, source pbf is missing: %s' % (map_file,source_pbf_path))
+            if PATH.getsize(source_pbf_path) == 0:
+                raise ProcessingException('cannot create map %s, source pbf is empty: %s' % (map_file,source_pbf_path))            
         
         osmosis_call = [self.osmosis_path,'--rb', source_pbf_path]
         
@@ -177,6 +189,7 @@ class MapCreator:
                 raise ProcessingException('cannot create map %s, polygon is missing: %s' % (map_file, polygon_file_path))
             osmosis_call += ['--bp', 'clipIncompleteEntities=true','file=%s'%polygon_file_path]
         
+        # construct complete path from relative path
         map_file_path = check_create_path(self.map_staging_path + map_file)        
         osmosis_call += ['--mw','file=%s'%map_file_path]
         osmosis_call += ['type=%s'%storage_type]
@@ -184,7 +197,7 @@ class MapCreator:
         if lat != None and lon != None:
             osmosis_call += ['map-start-position=%0.8f,%0.8f'%(lat,lon)]
                             
-        #### CALL TO OSMOSIS
+        #### CALL TO OSMOSIS #####
         logfile_path = check_create_path(self.logging_path + staging_dir + current_part_name + '.map.log')
         logfile = open(logfile_path,'a')
         try:
@@ -206,10 +219,11 @@ class MapCreator:
         map_file_target_path = check_create_path(self.target_path + target_dir+current_part_name + '.map')                
         move_call = ["mv",map_file_path, map_file_target_path]
         self.logger.debug("calling: %s"," ".join(move_call))
-        try:
-            subprocess.check_call(move_call)
-        except:        
-            raise ProcessingException("could not move created map %s to target directory" % map_file)
+        if not self.dry_run:
+            try:
+                subprocess.check_call(move_call)
+            except:        
+                raise ProcessingException("could not move created map %s to target directory" % map_file)
         
 def check_create_path(path):
     directory = PATH.dirname(path)
@@ -229,6 +243,8 @@ class ProcessingException(Exception):
     
 def main():
     
+    ######## SETUP OPTION PARSER AND READ COMMAND LINE ARGS ##########
+    
     usage = "usage: %prog -c CONFIGURATION_FILE [-d]"
     option_parser = OptionParser(usage,version='1.0')
     option_parser.add_option("-c", "--configuration-file", dest="configuration_file",
@@ -236,6 +252,9 @@ def main():
     option_parser.add_option("-d", "--dry-run", dest="dry_run",
                              action='store_true', default=False,
                              help="only execute a dry run without calls to osmosis [default=false]")
+    option_parser.add_option("-l", "--logging-conf", dest="logging_config_file",
+                             action='store', default='logging.conf',
+                             help="path to the logging configuration [default=logging.conf]")
     (options, args) = option_parser.parse_args()
            
     if len(args) != 0:
@@ -248,7 +267,11 @@ def main():
     
     # check whether xml configuration exists    
     if not PATH.exists(options.configuration_file) or not PATH.isfile(options.configuration_file):
-        sys.exit("the xml configuration file at '%s' could not be found" % options.configuration_file)    
+        sys.exit("the xml configuration file at '%s' could not be found" % options.configuration_file)
+        
+    
+    
+    ######## READING SCHEMA AND XML CONFIG ###########
     
     try:
         # load XML schema file
@@ -275,8 +298,35 @@ def main():
     full_osmosis_path = which(osmosis_path)        
     if not full_osmosis_path:
         sys.exit("the osmosis path is not valid, must be an executable file: '%s'" %osmosis_path)
+      
+    ########### LOGGING ###############  
+    # if logging configuration is provided use this
+    if options.logging_config_file and PATH.isfile(options.logging_config_file):
+        try:
+            logging.config.fileConfig(options.logging_config_file)
+            logger = logging.getLogger("mapcreator")
+            if options.dry_run:
+                # only perform console logging during dry run
+                # remove all other handlers than StreamHandler
+                
+                # to remove handler in for-loop, copy sequence by slicing
+                for handler in logger.handlers[:]:
+                    # need explicit check by name as 'isinstance()' also is true for subclasses                    
+                    if handler.__class__.__name__ != 'StreamHandler' :
+                        logger.removeHandler(handler)
+                    else:
+                        handler.setLevel(logging.DEBUG)                
+        except Exception, e:            
+            # use default logging if reading from file failed
+            logger = setup_logging(logging_path, options.dry_run)
+            logger.warning("log configuration file not valid, using default configuration: %s",e)
+    else:
+        # no logging conf provided, use default
+        logger = setup_logging(logging_path, options.dry_run)
+               
     
-    logger = setup_logging(logging_path, options.dry_run)
+    ########### START PROCESSING ############
+    
     logger.info("start creating maps from configuration at: '%s'", options.configuration_file)
     
     creator = MapCreator(full_osmosis_path,pbf_staging_path, map_staging_path, polygons_path,
@@ -286,16 +336,20 @@ def main():
 
 def setup_logging(logging_path, dry_run):
     
+    # check and create path to logging
     logging_path = check_create_path(normalize_path(logging_path))
     
+    # obtain and configure logger
+    # we use a console handler to log warnings and more critical problems
+    # the rotating file handler logs at debug level 
     logger = logging.getLogger("mapcreator")
     logger.setLevel(logging.DEBUG)    
     
     formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
     
+    # during a dry run we only want to log to the console
     if not dry_run:
-        # ROTATING LOG HANDLER
-        check_create_path(logging_path)
+        # ROTATING LOG HANDLER        
         rh = logging.handlers.RotatingFileHandler(logging_path+'mapcreator.log',
                                                   maxBytes=1048576, backupCount=5)
         rh.setLevel(logging.DEBUG)
@@ -304,13 +358,15 @@ def setup_logging(logging_path, dry_run):
     
     # CONSOLE LOG HANDLER
     sh = logging.StreamHandler()
+    # during a dry run the console should receive all logs 
     if not dry_run:
         sh.setLevel(logging.WARN)
     sh.setFormatter(formatter)
-    logger.addHandler(sh)     
+    logger.addHandler(sh)   
     
     return logger
 
+# used to check the path to the osmosis script
 def which(program):
     def is_exe(fpath):
         return os.path.isfile(fpath) and os.access(fpath, os.X_OK)
