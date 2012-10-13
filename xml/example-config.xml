@@ -31,7 +31,7 @@
 			<part name="basse-normandie" map-start-lat="49.182643" map-start-lon="-0.370638"></part>
 			<part name="bourgogne" map-start-lat="47.322141" map-start-lon="5.040622"></part>
 			<part name="bretagne" map-start-lat="48.114358" map-start-lon="-1.680404"></part>
-			<part name="centre	" map-start-lat="47.903225" map-start-lon="1.908724"></part>
+			<part name="centre" map-start-lat="47.903225" map-start-lon="1.908724"></part>
 			<part name="champagne-ardenne" map-start-lat="48.95658" map-start-lon="4.363933"></part>
 			<part name="franche-comte" map-start-lat="47.237986" map-start-lon="6.023962"></part>
 			<part name="haute-normandie" map-start-lat="49.443519" map-start-lon="1.098869"></part>
