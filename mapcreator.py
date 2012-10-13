@@ -129,6 +129,11 @@ class MapCreator:
         
         # set the path to the pbf file
         target_pbf = staging_dir + current_part_name + '.osm.pbf'
+        target_pbf_path = check_create_path(self.pbf_staging_path+target_pbf)
+        if PATH.exists(target_pbf_path):
+            self.logger.info("the pbf file %s already exists, using the existing one", target_pbf)
+            return target_pbf
+        
        
         # check whether source pbf exists and has non-zero size (irrelevant for dry run)
         source_pbf_path = self.pbf_staging_path + source_pbf
@@ -143,7 +148,7 @@ class MapCreator:
             raise ProcessingException('cannot create pbf %s , polygon is missing: %s' % (target_pbf, polygons_path))
         
         
-        target_pbf_path = check_create_path(self.pbf_staging_path+target_pbf)
+        
           
         osmosis_call = [self.osmosis_path, '--rb',source_pbf_path]
         osmosis_call += ['--bp','clipIncompleteEntities=true','file=%s'%polygons_path]
