@@ -2,7 +2,8 @@
 <mapcreator-config xmlns="http://mapsforge.org/mapcreator" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://mapsforge.org/mapcreator mapcreator.xsd " default-map-start-zoom="14" map-staging-path="maps"
 	pbf-staging-path="data" polygons-path="polygons" map-target-path="/web/ftp.mapsforge.org/public/maps" logging-path="logs" initial-source-pbf="planet.osm.pbf"
-        osmosis-path="/export/local-1/public/mapsforge/preprocessing/bin/osmosis-0.40.1/bin/osmosis">
+        osmosis-path="/export/local-1/public/mapsforge/preprocessing/bin/osmosis-0.40.1/bin/osmosis"
+        default-preferred-language="en">
 	<!-- EUROPE -->
 	<part name="europe" create-pbf="true" create-map="false">
 		<part name="germany" create-pbf="true" type="hd" map-start-lat="52.525582" map-start-lon="13.370061">			
@@ -180,8 +181,37 @@
 			</part>
 			<part name="alaska" map-start-lat="58.302" map-start-lon="-134.4197" />
 		</part>
+		
+		<part name="canada" create-pbf="true" create-map="false">
+		    <part name="alberta" map-start-lat="53.5292" map-start-lon="-113.4034"/>
+		    <part name="british-columbia" map-start-lat="48.4209" map-start-lon="-123.3277"/>
+		    <part name="manitoba" map-start-lat="49.8735" map-start-lon="-97.1067"/>
+		    <part name="new-brunswick" map-start-lat="45.9595" map-start-lon="-66.6174"/>
+		    <part name="newfoundland-and-labrador" map-start-lat="47.5607" map-start-lon="-52.7114"/>
+		    <part name="northwest-territories" map-start-lat="62.453" map-start-lon="-114.354"/>
+		    <part name="nova-scotia" map-start-lat="44.6378" map-start-lon="-63.5318"/>
+		    <part name="nunavut" map-start-lat="63.7552" map-start-lon="-68.5096"/>
+		    <part name="ontario" map-start-lat="43.644" map-start-lon="-79.3403"/>
+		    <part name="prince-edward-island" map-start-lat="46.2318" map-start-lon="-63.1317"/>
+		    <part name="quebec" map-start-lat="46.825" map-start-lon="-71.143"/>
+		    <part name="saskatchewan" map-start-lat="50.4622" map-start-lon="-104.6369"/>
+		    <part name="yukon" map-start-lat="60.7242" map-start-lon="-135.0559"/>		    
+		</part>
 	</part>
 	
+	<part name="south-america" create-pbf="true" create-map="false">
+	    <part name="argentina" map-start-lat="-34.6023" map-start-lon="-58.4489"/>
+	    <part name="bolivia" map-start-lat="-19.04201" map-start-lon="-65.25634"/>
+	    <part name="brazil" map-start-lat="-15.79412" map-start-lon="-47.88267"/>
+	    <part name="chile" map-start-lat="-33.43795" map-start-lon="-70.6504"/>
+	    <part name="colombia" map-start-lat="4.59805" map-start-lon="-74.07608"/>
+	    <part name="ecuador" map-start-lat="-0.22017" map-start-lon="-78.51209"/>	    
+	</part>
+	
+	<part name="central-america" map-start-lat="19.4392" map-start-lon="-99.129"/>
+    <part name="australia-oceania" map-start-lat="-33.8545" map-start-lon="151.2196"/>
+    <part name="africa" map-start-lat="30.05" map-start-lon="31.2414"/>
+		
 	<part name="asia" create-pbf="true" create-map="false">
 	    <part name="azerbaijan" map-start-lat="40.3818" map-start-lon="49.8967"/>
 	    <part name="china" map-start-lat="39.9073" map-start-lon="116.3848"/>

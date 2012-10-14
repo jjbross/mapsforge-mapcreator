@@ -30,7 +30,7 @@ class MapCreator:
     classdocs
     '''
     def __init__(self, osmosis_path, pbf_staging_path, map_staging_path, polygons_path,
-                  initial_source_pbf, target_path, logging_path, default_start_zoom,dry_run=False):
+                  initial_source_pbf, target_path, logging_path, default_start_zoom, default_preferred_language, dry_run=False):
         '''
         Constructor
         '''
@@ -42,6 +42,7 @@ class MapCreator:
         self.logging_path = normalize_path(logging_path)
         self.target_path = normalize_path(target_path)
         self.default_start_zoom = default_start_zoom
+        self.default_preferred_language = default_preferred_language 
         self.dry_run = dry_run
         
         self.logger = logging.getLogger("mapcreator")
@@ -63,6 +64,7 @@ class MapCreator:
             # lat/lon maybe None
             map_start_lat = child.get('map-start-lat')
             map_start_lon = child.get('map-start-lon')
+            preferred_language = child.get('preferred-language', self.default_preferred_language)
             # if not None, convert lat/lon to float
             if map_start_lat:
                 map_start_lat = float(map_start_lat)
@@ -92,7 +94,7 @@ class MapCreator:
                 
             if create_map:
                 try:
-                    self.call_create_map(new_source_pbf, staging_path, target_dir, current_part_name, area_filter, map_start_zoom,
+                    self.call_create_map(new_source_pbf, staging_path, target_dir, current_part_name, area_filter, map_start_zoom, preferred_language,
                                           storage_type, map_start_lat, map_start_lon)
                 except ProcessingException, e:
                     error_occurred = True
@@ -173,7 +175,7 @@ class MapCreator:
         except OSError,e:
             raise ProcessingException("osmosis executable not found: %s"%e)
     
-    def call_create_map(self, source_pbf, staging_dir, target_dir, current_part_name, area_filter, start_zoom, storage_type='ram', lat=None,lon=None):
+    def call_create_map(self, source_pbf, staging_dir, target_dir, current_part_name, area_filter, start_zoom,preferred_language, storage_type='ram', lat=None,lon=None):
         
         # set the path to the map file
         map_file = staging_dir + current_part_name + ".map"
@@ -199,6 +201,8 @@ class MapCreator:
         osmosis_call += ['--mw','file=%s'%map_file_path]
         osmosis_call += ['type=%s'%storage_type]
         osmosis_call += ['map-start-zoom=%s'%start_zoom]
+        osmosis_call += ['preferred-language=%s'%preferred_language]
+        
         if lat != None and lon != None:
             osmosis_call += ['map-start-position=%0.8f,%0.8f'%(lat,lon)]
                             
@@ -292,6 +296,7 @@ def main():
         
     root = tree.getroot()
     default_start_zoom = root.get('default-start-zoom',default=14)
+    default_preferred_language = root.get('default-preferred-language','en')
     initial_source_pbf = root.get('initial-source-pbf')
     pbf_staging_path = root.get('pbf-staging-path')
     map_staging_path = root.get('map-staging-path')
@@ -336,7 +341,7 @@ def main():
     
     creator = MapCreator(full_osmosis_path,pbf_staging_path, map_staging_path, polygons_path,
                          initial_source_pbf, map_target_path, logging_path,
-                         default_start_zoom,options.dry_run)
+                         default_start_zoom, default_preferred_language, options.dry_run)
     creator.evalPart(root, initial_source_pbf, '', '')                
 
 def setup_logging(logging_path, dry_run):

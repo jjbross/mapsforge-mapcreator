@@ -9,11 +9,9 @@
     	</sequence>
     	<attribute name="name" type="string" use="required"></attribute>
     	<attribute name="create-map" type="boolean" default="true"></attribute>
-        <attribute name="create-pbf" type="boolean" default="false"></attribute>
-        <attribute name="defines-hierarchy" type="boolean"
-    		default="true" use="optional">
-    	</attribute>
-        <attribute name="type" default="ram">
+    	<attribute name="create-pbf" type="boolean" default="false"></attribute>
+    	<attribute name="defines-hierarchy" type="boolean" default="true" use="optional"></attribute>
+    	<attribute name="type" default="ram">
     		<simpleType>
     			<restriction base="string">
     				<enumeration value="ram"></enumeration>
@@ -21,7 +19,7 @@
     			</restriction>
     		</simpleType>
     	</attribute>
-        <attribute name="map-start-zoom" default="14">
+    	<attribute name="map-start-zoom" default="14">
     		<simpleType>
     			<restriction base="int">
     				<minInclusive value="1"></minInclusive>
@@ -29,7 +27,7 @@
     			</restriction>
     		</simpleType>
     	</attribute>
-        <attribute name="map-start-lat">
+    	<attribute name="map-start-lat">
     		<simpleType>
     			<restriction base="double">
     				<minExclusive value="-90"></minExclusive>
@@ -45,6 +43,7 @@
     			</restriction>
     		</simpleType>
     	</attribute>
+    	<attribute name="preferred-language" type="string"></attribute>
     </complexType>
 
 
@@ -52,25 +51,14 @@
     	<sequence minOccurs="1" maxOccurs="unbounded">
     		<element name="part" type="tns:part"></element>
     	</sequence>
-    	<attribute name="default-map-start-zoom" type="int"
-    		use="optional" default="14">
-    	</attribute>
-    	<attribute name="pbf-staging-path" type="string" use="optional"
-    		default="data">
-    	</attribute>
-    	<attribute name="map-staging-path" type="string" use="optional"
-    		default="maps">
-    	</attribute>
-    	<attribute name="map-target-path" type="string"
-    		use="required">
-    	</attribute>
-    	<attribute name="polygons-path" type="string" use="optional"
-    		default="polygons">
-    	</attribute>
+    	<attribute name="default-map-start-zoom" type="int" use="optional" default="14"></attribute>
+    	<attribute name="pbf-staging-path" type="string" use="optional" default="data"></attribute>
+    	<attribute name="map-staging-path" type="string" use="optional" default="maps"></attribute>
+    	<attribute name="map-target-path" type="string" use="required"></attribute>
+    	<attribute name="polygons-path" type="string" use="optional" default="polygons"></attribute>
     	<attribute name="logging-path" type="string" use="required"></attribute>
-    	<attribute name="initial-source-pbf" type="string"
-    		use="optional" default="planet.osm.pbf">
-    	</attribute>
+    	<attribute name="initial-source-pbf" type="string" use="optional" default="planet.osm.pbf"></attribute>
     	<attribute name="osmosis-path" type="string" default="osmosis"></attribute>
+    	<attribute name="default-preferred-language" type="string" fixed="en"></attribute>
     </complexType>
 </schema>
